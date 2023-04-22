@@ -50,17 +50,30 @@ const keyboardKeys = [
 
     { type: 'special', label: 'Shift', value: 'Shift' },
     { type: 'character', label: '\\', value: '\\' },
-    { type: 'letter', label: 'Z', value: 'Z' },
-    { type: 'letter', label: 'X', value: 'X' },
-    { type: 'letter', label: 'C', value: 'C' },
-    { type: 'letter', label: 'V', value: 'V' },
-    { type: 'letter', label: 'B', value: 'B' },
-    { type: 'letter', label: 'N', value: 'N' },
-    { type: 'letter', label: 'M', value: 'M' },
+    { type: 'letter', label: 'Z', value: 'z' },
+    { type: 'letter', label: 'X', value: 'x' },
+    { type: 'letter', label: 'C', value: 'c' },
+    { type: 'letter', label: 'V', value: 'v' },
+    { type: 'letter', label: 'B', value: 'b' },
+    { type: 'letter', label: 'N', value: 'n' },
+    { type: 'letter', label: 'M', value: 'm' },
     { type: 'character', label: ',', value: ',' },
     { type: 'character', label: '.', value: '.' },
     { type: 'character', label: '/', value: "/" },
+    { type: 'special', label: 'up', value: '↑' },
     { type: 'special', label: 'Shift', value: 'Shift' },
+
+    { type: 'special', label: 'Ctrl', value: 'Ctrl' },
+    { type: 'special', label: 'Fn', value: 'Fn' },
+    { type: 'special', label: 'Command', value: 'Cm' },
+    { type: 'special', label: 'Alt', value: 'Alt' },
+    { type: 'special', label: 'Space', value: '' },
+    { type: 'special', label: 'Alt', value: 'Alt' },
+    { type: 'special', label: 'Ctrl', value: 'Ctrl' },
+    { type: 'control', label: 'left', value: '←' },
+    { type: 'control', label: 'down', value: '↓' },
+    { type: 'control', label: 'right', value: '→' },
+
 ];
 
 
@@ -92,6 +105,10 @@ for (let i = 0; i < keyboardKeys.length; i++) {
         keyboardKey.classList.add('caps');
     } else if (keyboardKeys[i].label === 'Shift') {
         keyboardKey.classList.add('shift');
+    } else if (keyboardKeys[i].label === 'Space') {
+        keyboardKey.classList.add('space');
+    } else if (keyboardKeys[i].label === 'left' || keyboardKeys[i].label === 'right') {
+        keyboardKey.classList.add('control');
     }
 
     const keyboardLabel = document.createElement("span");
