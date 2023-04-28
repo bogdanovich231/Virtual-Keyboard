@@ -3,8 +3,9 @@ const keyboardTitle = document.createElement("h1");
 const keyboardArea = document.createElement("textarea");
 const keyboardBody = document.createElement("div")
 const keyboardLine = document.createElement("div")
+
 const keyboardKeys = [
-    { type: 'character', label: '~', value: '~' },
+    { type: 'character', label: '`', value: '`' },
     { type: 'letter', label: '1', value: '1' },
     { type: 'letter', label: '2', value: '2' },
     { type: 'letter', label: '3', value: '3' },
@@ -48,7 +49,7 @@ const keyboardKeys = [
     { type: 'character', label: "'", value: "'" },
     { type: 'character', label: '\\', value: '\\' },
 
-    { type: 'special', label: 'Shift', value: 'Shift' },
+    { type: 'special', label: 'shiftLeft', value: 'Shift' },
     { type: 'character', label: '\\', value: '\\' },
     { type: 'letter', label: 'Z', value: 'z' },
     { type: 'letter', label: 'X', value: 'x' },
@@ -61,7 +62,7 @@ const keyboardKeys = [
     { type: 'character', label: '.', value: '.' },
     { type: 'character', label: '/', value: "/" },
     { type: 'special', label: 'up', value: '↑' },
-    { type: 'special', label: 'Shift', value: 'Shift' },
+    { type: 'special', label: 'shiftRight', value: 'Shift' },
 
     { type: 'special', label: 'Ctrl', value: 'Ctrl' },
     { type: 'special', label: 'Fn', value: 'Fn' },
@@ -91,9 +92,14 @@ keyboardBody.append(keyboardLine);
 
 
 
+
 for (let i = 0; i < keyboardKeys.length; i++) {
+
+
     const keyboardKey = document.createElement("button");
-    keyboardKey.className = "keyboard_key key";
+    keyboardKey.className = "keyboard_key key data-letter data-code";
+    keyboardKey.setAttribute("data-letter", keyboardKeys[i].value.toLowerCase());
+    keyboardKey.setAttribute("data-code", keyboardKeys[i].code);
 
     if (keyboardKeys[i].label === 'Backspace') {
         keyboardKey.classList.add('backspace');
@@ -103,22 +109,31 @@ for (let i = 0; i < keyboardKeys.length; i++) {
         keyboardKey.classList.add('enter');
     } else if (keyboardKeys[i].label === 'Caps Lock') {
         keyboardKey.classList.add('caps');
-    } else if (keyboardKeys[i].label === 'Shift') {
-        keyboardKey.classList.add('shift');
+    } else if (keyboardKeys[i].label === 'shiftLeft') {
+        keyboardKey.classList.add('shiftLeft');
+    } else if (keyboardKeys[i].label === 'shiftRight') {
+        keyboardKey.classList.add('shiftRight');
     } else if (keyboardKeys[i].label === 'Space') {
         keyboardKey.classList.add('space');
     } else if (keyboardKeys[i].label === 'left' || keyboardKeys[i].label === 'right') {
         keyboardKey.classList.add('control');
     }
 
-    const keyboardLabel = document.createElement("span");
-    keyboardLabel.className = "keyboard_label label";
-    keyboardLabel.innerHTML = keyboardKeys[i].value;
+    const keyboardSpan = document.createElement("span");
+    keyboardSpan.className = "keyboard_span span";
+    keyboardSpan.innerHTML = keyboardKeys[i].value;
 
-    keyboardKey.appendChild(keyboardLabel);
-
-    keyboardKey.addEventListener("click", () => {
-        console.log("клавиша нажата", keyboardKeys[i].value)
-    });
+    keyboardKey.appendChild(keyboardSpan);
     keyboardLine.appendChild(keyboardKey);
-}
+
+};
+keyboardArea.addEventListener('keydown', function (e) {
+    keyboardLine.querySelectorAll('.keyboard_key').forEach(function (key) {
+        if (e.key == key.getAttribute('data-letter') || e.code == key.getAttribute('data-code')) {
+            key.classList.add('active');
+
+        }
+    });
+});
+
+

@@ -46,12 +46,12 @@ body {
     transition: .2s;
 }
 
-.keyboard_key.active {
+.active {
     background-color: blue;
     color: aliceblue;
 }
 
-.keyboard_key.remove {
+.remove {
     transition: key_animation 0.5s forwards;
 }
 
@@ -84,7 +84,8 @@ body {
     width: 5em;
 }
 
-.shift {
+.shiftRight,
+.shiftLeft {
     width: 58px;
 }
 
