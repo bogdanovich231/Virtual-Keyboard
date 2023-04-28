@@ -131,9 +131,15 @@ keyboardArea.addEventListener('keydown', function (e) {
     keyboardLine.querySelectorAll('.keyboard_key').forEach(function (key) {
         if (e.key == key.getAttribute('data-letter') || e.code == key.getAttribute('data-code')) {
             key.classList.add('active');
-
         }
     });
 });
 
-
+keyboardArea.addEventListener('keyup', function (e) {
+    keyboardLine.querySelectorAll('.keyboard_key').forEach(function (key) {
+        if (e.key == key.getAttribute('data-letter') || e.code == key.getAttribute('data-code')) {
+            key.classList.remove('active')
+            key.classList.add('remove')
+        }
+    })
+})
