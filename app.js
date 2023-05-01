@@ -127,12 +127,17 @@ for (let i = 0; i < keyboardKeys.length; i++) {
     keyboardLine.appendChild(keyboardKey);
 
 };
+
 let ctrlKey = false;
 
 keyboardArea.addEventListener('keydown', function (e) {
     if (e.key === 'Control') {
         ctrlKey = true;
         keyboardLine.querySelector('[data-letter="ctrl"]').classList.add('active');
+    } else if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+        keyboardLine.querySelectorAll('.shiftLeft, .shiftRight').forEach(function (key) {
+            key.classList.add('active');
+        });
     } else {
         keyboardLine.querySelectorAll('.keyboard_key').forEach(function (key) {
             if (e.key == key.getAttribute('data-letter').toLowerCase() ||
@@ -149,20 +154,33 @@ keyboardArea.addEventListener('keyup', function (e) {
     if (e.key === 'Control') {
         ctrlKey = false;
         keyboardLine.querySelector('[data-letter="ctrl"]').classList.remove('active');
+    } else if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+        keyboardLine.querySelectorAll('.shiftLeft, .shiftRight').forEach(function (key) {
+            key.classList.remove('active');
+        });
     } else {
         keyboardLine.querySelectorAll('.keyboard_key').forEach(function (key) {
             if (e.key == key.getAttribute('data-letter').toLowerCase() ||
                 e.code == key.getAttribute('data-code')) {
                 key.classList.remove('active');
-                key.classList.add('remove');
             } else if (e.key == key.getAttribute('data-letter').toUpperCase() && key.getAttribute('data-letter').length === 1) {
                 key.classList.remove('active');
-                key.classList.add('remove');
             }
         });
     }
 });
 
+
+
+keyboardLine.querySelectorAll('.keyboard_key').forEach(function (key) {
+    key.addEventListener('mousedown', function () {
+        key.classList.add('active');
+    });
+
+    key.addEventListener('mouseup', function () {
+        key.classList.remove('active');
+    });
+});
 
 const capsLockButton = document.querySelector('[data-letter="caps lock"]');
 let isCapsLockEnabled = false;
