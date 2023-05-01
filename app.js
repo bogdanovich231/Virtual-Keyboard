@@ -64,13 +64,13 @@ const keyboardKeys = [
     { type: 'special', label: 'up', value: '↑' },
     { type: 'special', label: 'shiftRight', value: 'Shift' },
 
-    { type: 'special', label: 'Ctrl', value: 'Ctrl' },
+    { type: 'special', label: 'Control', value: 'Ctrl' },
     { type: 'special', label: 'Fn', value: 'Fn' },
     { type: 'special', label: 'Command', value: 'Cm' },
     { type: 'special', label: 'Alt', value: 'Alt' },
     { type: 'special', label: 'Space', value: '' },
     { type: 'special', label: 'Alt', value: 'Alt' },
-    { type: 'special', label: 'Ctrl', value: 'Ctrl' },
+    { type: 'special', label: 'Control', value: 'Ctrl' },
     { type: 'control', label: 'left', value: '←' },
     { type: 'control', label: 'down', value: '↓' },
     { type: 'control', label: 'right', value: '→' },
@@ -129,17 +129,49 @@ for (let i = 0; i < keyboardKeys.length; i++) {
 };
 keyboardArea.addEventListener('keydown', function (e) {
     keyboardLine.querySelectorAll('.keyboard_key').forEach(function (key) {
-        if (e.key == key.getAttribute('data-letter') || e.code == key.getAttribute('data-code')) {
+        if (e.key == key.getAttribute('data-letter').toLowerCase() || e.code == key.getAttribute('data-code') || e.ctrlKey && key.getAttribute('data-letter') == 'ctrl' || e.ctrlKey && key.getAttribute('data-letter') == 'caps lock') {
+            key.classList.add('active');
+        } else if (e.key == key.getAttribute('data-letter').toUpperCase() && key.getAttribute('data-letter').length === 1) {
             key.classList.add('active');
         }
     });
 });
-
 keyboardArea.addEventListener('keyup', function (e) {
     keyboardLine.querySelectorAll('.keyboard_key').forEach(function (key) {
-        if (e.key == key.getAttribute('data-letter') || e.code == key.getAttribute('data-code')) {
-            key.classList.remove('active')
-            key.classList.add('remove')
+        if (e.key == key.getAttribute('data-letter').toLowerCase() || e.code == key.getAttribute('data-code') || e.ctrlKey && key.getAttribute('data-letter') == 'ctrl' || e.ctrlKey && key.getAttribute('data-letter') == 'caps lock') {
+            key.classList.remove('active');
+            key.classList.add('remove');
+        } else if (e.key == key.getAttribute('data-letter').toUpperCase() && key.getAttribute('data-letter').length === 1) {
+            key.classList.remove('active');
+            key.classList.add('remove');
         }
-    })
-})
+    });
+});
+
+
+const capsLockButton = document.querySelector('[data-letter="caps lock"]');
+let isCapsLockEnabled = false;
+
+document.addEventListener('keydown', function (event) {
+    if (event.key === 'CapsLock') {
+        isCapsLockEnabled = !isCapsLockEnabled;
+        const keys = document.querySelectorAll('.keyboard_key');
+
+        keys.forEach(function (key) {
+            const letter = key.getAttribute('data-letter');
+            if (letter.length === 1 && letter.match(/[a-z]/i)) {
+                key.textContent = isCapsLockEnabled ? letter.toUpperCase() : letter.toLowerCase();
+            }
+        });
+
+        if (isCapsLockEnabled) {
+            capsLockButton.classList.add('active');
+        } else {
+            capsLockButton.classList.remove('active');
+        }
+    }
+
+});
+
+
+
