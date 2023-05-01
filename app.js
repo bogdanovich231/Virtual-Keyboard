@@ -127,25 +127,40 @@ for (let i = 0; i < keyboardKeys.length; i++) {
     keyboardLine.appendChild(keyboardKey);
 
 };
+let ctrlKey = false;
+
 keyboardArea.addEventListener('keydown', function (e) {
-    keyboardLine.querySelectorAll('.keyboard_key').forEach(function (key) {
-        if (e.key == key.getAttribute('data-letter').toLowerCase() || e.code == key.getAttribute('data-code') || e.ctrlKey && key.getAttribute('data-letter') == 'ctrl' || e.ctrlKey && key.getAttribute('data-letter') == 'caps lock') {
-            key.classList.add('active');
-        } else if (e.key == key.getAttribute('data-letter').toUpperCase() && key.getAttribute('data-letter').length === 1) {
-            key.classList.add('active');
-        }
-    });
+    if (e.key === 'Control') {
+        ctrlKey = true;
+        keyboardLine.querySelector('[data-letter="ctrl"]').classList.add('active');
+    } else {
+        keyboardLine.querySelectorAll('.keyboard_key').forEach(function (key) {
+            if (e.key == key.getAttribute('data-letter').toLowerCase() ||
+                e.code == key.getAttribute('data-code')) {
+                key.classList.add('active');
+            } else if (e.key == key.getAttribute('data-letter').toUpperCase() && key.getAttribute('data-letter').length === 1) {
+                key.classList.add('active');
+            }
+        });
+    }
 });
+
 keyboardArea.addEventListener('keyup', function (e) {
-    keyboardLine.querySelectorAll('.keyboard_key').forEach(function (key) {
-        if (e.key == key.getAttribute('data-letter').toLowerCase() || e.code == key.getAttribute('data-code') || e.ctrlKey && key.getAttribute('data-letter') == 'ctrl' || e.ctrlKey && key.getAttribute('data-letter') == 'caps lock') {
-            key.classList.remove('active');
-            key.classList.add('remove');
-        } else if (e.key == key.getAttribute('data-letter').toUpperCase() && key.getAttribute('data-letter').length === 1) {
-            key.classList.remove('active');
-            key.classList.add('remove');
-        }
-    });
+    if (e.key === 'Control') {
+        ctrlKey = false;
+        keyboardLine.querySelector('[data-letter="ctrl"]').classList.remove('active');
+    } else {
+        keyboardLine.querySelectorAll('.keyboard_key').forEach(function (key) {
+            if (e.key == key.getAttribute('data-letter').toLowerCase() ||
+                e.code == key.getAttribute('data-code')) {
+                key.classList.remove('active');
+                key.classList.add('remove');
+            } else if (e.key == key.getAttribute('data-letter').toUpperCase() && key.getAttribute('data-letter').length === 1) {
+                key.classList.remove('active');
+                key.classList.add('remove');
+            }
+        });
+    }
 });
 
 
