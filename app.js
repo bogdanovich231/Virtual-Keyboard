@@ -134,8 +134,10 @@ keyboardArea.addEventListener('keydown', function (e) {
     if (e.key === 'Control') {
         ctrlKey = true;
         keyboardLine.querySelector('[data-letter="ctrl"]').classList.add('active');
-    } if (e.key === 'Tab') {
+    } else if (e.key === 'Tab') {
         keyboardLine.querySelector('[data-letter="tab"]').classList.add('active');
+    } else if (e.key === 'Backspace') {
+        keyboardLine.querySelector('[data-letter="backspace"]').classList.add('active');
     } else if (e.key === 'Enter') {
         keyboardLine.querySelector('[data-letter="enter"]').classList.add('active');
     } else if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
@@ -158,8 +160,10 @@ keyboardArea.addEventListener('keyup', function (e) {
     if (e.key === 'Control') {
         ctrlKey = false;
         keyboardLine.querySelector('[data-letter="ctrl"]').classList.remove('active');
-    } if (e.key === 'Tab') {
+    } else if (e.key === 'Tab') {
         keyboardLine.querySelector('[data-letter="tab"]').classList.remove('active');
+    } else if (e.key === 'Backspace') {
+        keyboardLine.querySelector('[data-letter="backspace"]').classList.remove('active');
     } else if (e.key === 'Enter') {
         keyboardLine.querySelector('[data-letter="enter"]').classList.remove('active');
     } else if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
@@ -217,13 +221,13 @@ document.addEventListener('keydown', function (event) {
 
 
 keyboardArea.addEventListener('keydown', function (e) {
-    if (e.key === 'Tab') { // если нажата клавиша Tab
-        e.preventDefault(); // отменяем стандартное поведение браузера
-        const cursorPosition = keyboardArea.selectionStart; // получаем текущую позицию курсора
-        const currentText = keyboardArea.value; // получаем текущий текст
-        const newText = currentText.substring(0, cursorPosition) + '\t' + currentText.substring(cursorPosition); // добавляем отступ
-        keyboardArea.value = newText; // устанавливаем новый текст
-        keyboardArea.selectionStart = cursorPosition + 1; // перемещаем курсор на следующую позицию
+    if (e.key === 'Tab') {
+        e.preventDefault();
+        const cursorPosition = keyboardArea.selectionStart;
+        const currentText = keyboardArea.value;
+        const newText = currentText.substring(0, cursorPosition) + '\t' + currentText.substring(cursorPosition);
+        keyboardArea.value = newText;
+        keyboardArea.selectionStart = cursorPosition + 1;
         keyboardArea.selectionEnd = cursorPosition + 1;
     }
 });
